@@ -113,3 +113,26 @@ Bu komutlar, Minikube'un başarılı bir şekilde çalıştığını doğruladı
 ### Sonuç
 
 AWS EC2 üzerinde Minikube kurulumunu tamamen AWS Management Console ve Systems Manager kullanarak gerçekleştirilir. Bu adımlar sonucunda, AWS üzerinde bir Kubernetes ortamı oluşturarak uygulamalarınızı test edebilir ve geliştirebilirsiniz.
+
+### 5. Manifest.yaml'ın Minikube'e Deploy Edilmesi
+
+Manifest dosyası Minikube'e deploy etmek için:
+'''
+Kubectl apply -f manifest.yaml
+'''
+
+Deployment bölümü, bir Deployment tanımlar. Deployment, Kubernetes üzerinde belirli bir sayıda pod'un çalışmasını sağlar.
+
+Service bölümü, bir Service tanımlar. Service, Kubernetes'te pod'lara ağ üzerinden erişim sağlar.
+
+İngress bölümü, bir Ingress tanımlar. Ingress, HTTP ve HTTPS trafiğini Kubernetes servislerine yönlendirmek için kullanılır.
+
+### Sonuç
+
+Bu manifest.yaml dosyasını Kubernetes kümenize deploy ettiğinizde:
+
+bcfm-case adlı bir pod oluşturulur ve bu pod, halil5841/task_flask:latest image'ını kullanarak çalıştırılır.
+
+Bu pod, küme içinde ve dışında bcfm-case-service adlı bir NodePort servisi aracılığıyla erişilebilir hale gelir. Dış dünyadan bu servise http://<NodeIP>:30001 adresi üzerinden erişilebilir.
+
+bcfm-case.local alan adı üzerinden gelen HTTP trafiği, Ingress aracılığıyla bcfm-case-service servisine yönlendirilir ve bu servis, trafiği pod'a iletir.
