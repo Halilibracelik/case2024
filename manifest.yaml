@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bcfm-case
+  labels:
+    app: bcfm-case
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bcfm-case
+  template:
+    metadata:
+      labels:
+        app: bcfm-case
+    spec:
+      containers:
+      - name: bcfm-case
+        image: halil5841/task_flask:latest
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bcfm-case-service
+  labels:
+    app: bcfm-case
+spec:
+  type: NodePort
+  ports:
+    - port: 5000
+      targetPort: 5000
+      nodePort: 30001
+  selector:
+    app: bcfm-case
