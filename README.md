@@ -136,3 +136,13 @@ bcfm-case adlı bir pod oluşturulur ve bu pod, halil5841/task_flask:latest imag
 Bu pod, küme içinde ve dışında bcfm-case-service adlı bir NodePort servisi aracılığıyla erişilebilir hale gelir. Dış dünyadan bu servise ```http://<NodeIP>:30001``` adresi üzerinden erişilebilir.
 
 bcfm-case.local alan adı üzerinden gelen HTTP trafiği, Ingress aracılığıyla bcfm-case-service servisine yönlendirilir ve bu servis, trafiği pod'a iletir.
+
+### 6. Nginx Servisini Başlatma
+
+nginx.conf dosyası, NGINX'in yerel olarak (localhost) dinlediği 80 numaralı port üzerinden gelen tüm HTTP isteklerini Minikube üzerinde çalışan bir Kubernetes servisine yönlendirmesini sağlar. Minikube servisi ise 192.168.49.2 IP adresi ve 30001 portu üzerinden erişilebilir durumdadır.
+
+Nginx servisini başaltmak için bu komutu çalıştırabilirsiniz.
+```
+sudo systemctl start nginx
+```
+
