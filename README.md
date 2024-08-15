@@ -154,4 +154,5 @@ AWS üzerinde EC2'nun önüne LoadBalancer konumlandırılmıştır. Bu işlem i
 LoadBalancer DNS:
 
 http://case2024-alb-1960691765.eu-north-1.elb.amazonaws.com/
+
 http://case2024-alb-1960691765.eu-north-1.elb.amazonaws.com/health
