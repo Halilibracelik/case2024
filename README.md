@@ -1,12 +1,5 @@
 # CASE 2024
 
-### Gerekli Komponentler
-
-Bu projeyi çalıştırmak için aşağıdaki araçlara ihtiyacınız olacak:
-
-    Docker
-    Python 3.9
-
 ### Docker İmajı Oluşturma ve Çalıştırma
 
 Docker imajını oluşturmak için, proje dizininde aşağıdaki komutu çalıştırın:
