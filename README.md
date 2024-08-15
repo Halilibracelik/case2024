@@ -52,24 +52,9 @@ Bu adım , AWS EC2 üzerinde t3.micro tipinde bir makine kurarak, bu makineye Mi
 
 ### EC2 Makinesi Oluşturma 
 
-    AWS Management Console'a giriş yapın.
-    EC2 Dashboard'a giderek Launch Instance butonuna tıklayın.
-    Aşağıdaki seçenekleri kullanarak yeni bir EC2 makinesi oluşturun:
-        Name: case
-        AMI: Ubuntu 20.04 LTS (Amazon Machine Image)
-        Instance Type: t3.micro
-        Network Settings: Varsayılan ayarları kullanın, ancak SSH (port 22) ve HTTP/HTTPS (port 80/443) erişimlerini güvenlik grubu üzerinden açın.
-    Son olarak, Launch Instance butonuna tıklayın ve makineyi başlatın.
+AWS Console üzerinde EC2 servisine gidilerek burada launch instance kısmından sanal makine oluşturulur. Security group kısmında 22 portu açılır. Pem dosyası ile ssh yapılarak makineye erişilir.
 
 ### EC2 Makinesine Minikube Kurulumu
-
-EC2 makinesi başlatıldıktan sonra, AWS Systems Manager'ı kullanarak Minikube'u yükleyin:
-
-    AWS Systems Manager bölümüne gidip Session Manager'ı açın.
-
-    EC2 makinesi için bir oturum başlatın.
-
-    Oturum üzerinden aşağıdaki adımları izleyerek Minikube'u kurun:
 
 Minikube ve Kubectl Kurulumu:
 
@@ -88,7 +73,6 @@ Docker sürücüsüyle Minikube'u başlatın:
 ```
 minikube start 
 ```
-### Minikube'un Durumunu Kontrol Edin
 Minikube'un durumunu kontrol etmek için:
 ```
 minikube status
@@ -113,9 +97,9 @@ Service bölümü, bir Service tanımlar. Service, Kubernetes'te pod'lara ağ ü
 
 Bu manifest.yaml dosyasını Kubernetes clustera deploy ettiğinizde:
 
-bcfm-case adlı bir pod oluşturulur ve bu pod, halil5841/task_flask:latest image'ını kullanarak çalıştırılır.
+case adlı bir pod oluşturulur ve bu pod, halil5841/task_flask:latest image'ını kullanarak çalıştırılır.
 
-Bu pod, cluster içinde ve dışında bcfm-case-service adlı bir NodePort servisi aracılığıyla erişilebilir hale gelir. Dış dünyadan bu servise ```http://<NodeIP>:30001``` adresi üzerinden erişilebilir.
+Bu pod, cluster içinde ve dışında case-service adlı bir NodePort servisi aracılığıyla erişilebilir hale gelir. Dış dünyadan bu servise ```http://<NodeIP>:30001``` adresi üzerinden erişilebilir.
 
 
 ### Nginx Servisini Başlatma
