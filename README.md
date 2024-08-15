@@ -117,9 +117,9 @@ AWS EC2 üzerinde Minikube kurulumunu tamamen AWS Management Console ve Systems 
 ### 5. Manifest.yaml'ın Minikube'e Deploy Edilmesi
 
 Manifest dosyası Minikube'e deploy etmek için:
-'''
+```
 Kubectl apply -f manifest.yaml
-'''
+```
 
 Deployment bölümü, bir Deployment tanımlar. Deployment, Kubernetes üzerinde belirli bir sayıda pod'un çalışmasını sağlar.
 
@@ -133,6 +133,6 @@ Bu manifest.yaml dosyasını Kubernetes kümenize deploy ettiğinizde:
 
 bcfm-case adlı bir pod oluşturulur ve bu pod, halil5841/task_flask:latest image'ını kullanarak çalıştırılır.
 
-Bu pod, küme içinde ve dışında bcfm-case-service adlı bir NodePort servisi aracılığıyla erişilebilir hale gelir. Dış dünyadan bu servise http://<NodeIP>:30001 adresi üzerinden erişilebilir.
+Bu pod, küme içinde ve dışında bcfm-case-service adlı bir NodePort servisi aracılığıyla erişilebilir hale gelir. Dış dünyadan bu servise ```http://<NodeIP>:30001``` adresi üzerinden erişilebilir.
 
 bcfm-case.local alan adı üzerinden gelen HTTP trafiği, Ingress aracılığıyla bcfm-case-service servisine yönlendirilir ve bu servis, trafiği pod'a iletir.
