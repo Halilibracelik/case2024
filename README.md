@@ -1,6 +1,4 @@
-f# CASE 2024
-
-Bu proje, Python 3.9 tabanlı bir uygulama çalıştıran bir Docker imajı kullanır.
+# CASE 2024
 
 ### Gerekli Komponentler
 
