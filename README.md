@@ -1,12 +1,6 @@
 # CASE 2024
 
 Bu proje, Python 3.9 tabanlı bir uygulama çalıştıran bir Docker imajı kullanır.
-İçindekiler
-
-    Gerekli Komponentler
-    Docker İmajı Oluşturma
-    Uygulamayı Çalıştırma
-    Katkıda Bulunma
 
 ### Gerekli Komponentler
 
@@ -60,7 +54,6 @@ docker push halil5841/task_flask:latest
 Bu adım , AWS EC2 üzerinde t3.micro tipinde bir makine kurarak, bu makineye Minikube'u nasıl kurulduğu anlatmaktadır.
 
 
-
 ### 1. EC2 Makinesi Oluşturma 
 
     AWS Management Console'a giriş yapın.
@@ -104,15 +97,12 @@ Minikube'un durumunu kontrol etmek için:
 ```
 minikube status
 ```
-Ardından, Kubernetes pode'larını kontrol edin:
+Ardından, Kubernetes pod'larını kontrol edin:
 ```
-kubectl get nodes
+kubectl get pods
 ```
 Bu komutlar, Minikube'un başarılı bir şekilde çalıştığını doğruladı.
 
-### Sonuç
-
-AWS EC2 üzerinde Minikube kurulumunu tamamen AWS Management Console ve Systems Manager kullanarak gerçekleştirilir. Bu adımlar sonucunda, AWS üzerinde bir Kubernetes ortamı oluşturarak uygulamalarınızı test edebilir ve geliştirebilirsiniz.
 
 ### 5. Manifest.yaml'ın Minikube'e Deploy Edilmesi
 
@@ -125,24 +115,40 @@ Deployment bölümü, bir Deployment tanımlar. Deployment, Kubernetes üzerinde
 
 Service bölümü, bir Service tanımlar. Service, Kubernetes'te pod'lara ağ üzerinden erişim sağlar.
 
-İngress bölümü, bir Ingress tanımlar. Ingress, HTTP ve HTTPS trafiğini Kubernetes servislerine yönlendirmek için kullanılır.
-
-### Sonuç
-
-Bu manifest.yaml dosyasını Kubernetes kümenize deploy ettiğinizde:
+Bu manifest.yaml dosyasını Kubernetes clustera deploy ettiğinizde:
 
 bcfm-case adlı bir pod oluşturulur ve bu pod, halil5841/task_flask:latest image'ını kullanarak çalıştırılır.
 
-Bu pod, küme içinde ve dışında bcfm-case-service adlı bir NodePort servisi aracılığıyla erişilebilir hale gelir. Dış dünyadan bu servise ```http://<NodeIP>:30001``` adresi üzerinden erişilebilir.
-
-bcfm-case.local alan adı üzerinden gelen HTTP trafiği, Ingress aracılığıyla bcfm-case-service servisine yönlendirilir ve bu servis, trafiği pod'a iletir.
+Bu pod, cluster içinde ve dışında bcfm-case-service adlı bir NodePort servisi aracılığıyla erişilebilir hale gelir. Dış dünyadan bu servise ```http://<NodeIP>:30001``` adresi üzerinden erişilebilir.
 
 ### 6. Nginx Servisini Başlatma
 
-nginx.conf dosyası, NGINX'in yerel olarak (localhost) dinlediği 80 numaralı port üzerinden gelen tüm HTTP isteklerini Minikube üzerinde çalışan bir Kubernetes servisine yönlendirmesini sağlar. Minikube servisi ise 192.168.49.2 IP adresi ve 30001 portu üzerinden erişilebilir durumdadır.
+nginx.conf dosyası, NGINX'in yerel olarak (localhost) dinlediği 80 numaralı port üzerinden gelen tüm HTTP isteklerini Minikube üzerinde çalışan uygulamanın servisine yönlendirmesini sağlar. Uygulama servisi ise 192.168.49.2 IP adresi ve 30001 portu üzerinden erişilebilir durumdadır.
 
 Nginx servisini başaltmak için bu komutu çalıştırabilirsiniz.
 ```
 sudo systemctl start nginx
 ```
+### 7. LoadBalancer Oluşturulması
+
+AWS üzerinde EC2'nun önüne LoadBalancer konumlandırılmıştır. Bu işlem için AWS Console üzerinde EC2 servisinin altında Load Balancers kısmında Create LoadBalancer seçeneği ile oluşturulmuştur. Bu kısımda application loadbalancer seçilmiştir. Loadbalancer, uygulamanın çalıştığı ec2 ile aynı networkde olacak şekilde ayarlanmıştır. Loadbalancer'ın istekleri uygulamaya iletebilmesi için target group oluşturularak EC2 makine target group'a register edilmiştir. 
+
+![image](https://github.com/user-attachments/assets/d6a45681-4036-4018-8e9d-c0a3ac78ff65)
+
+
+![image](https://github.com/user-attachments/assets/92999117-2e64-46b2-b8ec-9fbbf237571d)
+
+
+### Case Çıktıları
+
+- Case'de istenilen API uygulaması geliştirilerek Containerize edilmiştir.
+- Oluşturulan image Docker Hub'a gönderilmiştir. 
+- AWS üzerinde bir EC2 makine oluşturularak bu makine içerisine minikube kurulumu yapılmıştır. 
+- Uygulamayı kubernetes üzerine deploy etmek için manifest dosyaları oluşturulmuştur. 
+- Manifest dosyasının içinde deployment ve service tanımları bulunmaktadır. Service tanımı nodeport olarak yapılmıştır. 
+- Bu sayede uygulama dışardan erişim için uygun hale getirilmiştir. 
+- EC2 makine içerisine nginx kurulumu yapılarak makineye 80 portundan gelecek istekleri service nodeport'una yönlendirecek nginx konfigürasyonu yapılmıştır. 
+- AWS üzerinde oluşturulan loadbalancer'a target olarak bu EC2 makinesi verilmiştir. 
+- Loadbalancer 80 portundan gelen istekleri alarak EC2 makinesine göndermekte ve makine içerisinde nginx bu isteği alarak uygulamaya iletmektedir.
+
 
